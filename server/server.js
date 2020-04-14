@@ -9,7 +9,7 @@ const homeRoute = require("./routes/homeRoute");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use("/", homeRoute);
+app.use("/api/", homeRoute);
 
 const PORT = process.env.PORT || 4000;
 
