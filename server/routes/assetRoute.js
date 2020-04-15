@@ -49,4 +49,40 @@ router.get("/api/asset/:id/", async (req, res) => {
   }
 });
 
+router.put("/api/asset/update/:id", async (req, res) => {
+  const id = req.params.id;
+  const { name, model, brand, category, assignee, type, assetID } = req.body;
+  try {
+    const updatedAsset = await Asset.findByIdAndUpdate(
+      { _id: id },
+      {
+        name,
+        model,
+        brand,
+        category,
+        assignee,
+        type,
+        assetID,
+      }
+    );
+    console.log({ updatedAsset });
+    res.status(201).json({ updatedAsset });
+    console.log({ updatedAsset });
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+router.delete("/api/asset/delete/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+    await Asset.findByIdAndDelete({
+      _id: id,
+    });
+    res.status(201).json({ message: "Asset deleted." });
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 module.exports = router;
