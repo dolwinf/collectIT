@@ -35,4 +35,18 @@ router.get("/api/asset/track/", async (req, res) => {
   }
 });
 
+router.get("/api/asset/:id/", async (req, res) => {
+  const id = req.params.id;
+  try {
+    const foundAsset = await Asset.findOne({
+      _id: id,
+    });
+    console.log({ foundAsset });
+    res.status(201).json({ foundAsset });
+    console.log({ foundAsset });
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 module.exports = router;
