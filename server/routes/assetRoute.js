@@ -21,4 +21,18 @@ router.post("/api/asset/create", async (req, res) => {
   }
 });
 
+router.get("/api/asset/track/", async (req, res) => {
+  const { assetID } = req.body;
+  try {
+    const foundAsset = await Asset.findOne({
+      assetID,
+    });
+    console.log({ foundAsset });
+    res.status(201).json({ foundAsset });
+    console.log({ foundAsset });
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 module.exports = router;
