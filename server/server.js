@@ -1,24 +1,20 @@
 const express = require("express");
 const app = express();
-const mongoose = require("mongoose");
-
-const bodyParser = require("body-parser");
+const cors = require("cors");
+const connectDB = require("../server/config/db");
 
 const homeRoute = require("./routes/homeRoute");
+const signupRoute = require("./routes/signupRoute");
 
-app.use(bodyParser.urlencoded({ extended: true }));
+connectDB();
+
+app.use(cors());
+
 app.use(express.json());
 
-app.use("/api/", homeRoute);
+app.use(homeRoute, signupRoute);
 
 const PORT = process.env.PORT || 4000;
-
-mongoose.connect(
-  "mongodb+srv://dolwin:mongo333@collecit-rjoxg.mongodb.net/test?retryWrites=true&w=majority",
-  { useNewUrlParser: true, useUnifiedTopology: true },
-
-  () => console.log("DB connected")
-);
 
 app.listen(PORT, () => {
   console.log("Server listening on port", PORT);

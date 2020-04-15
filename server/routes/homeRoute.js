@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-router.route("/").get((req, res) => {
+router.get("/api/home", (req, res) => {
   res.send("CollectIT");
 });
 
