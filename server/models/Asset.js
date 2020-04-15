@@ -1,11 +1,16 @@
 const mongoose = require("mongoose");
 
-const { String } = mongoose.Schema.Types;
+const { String, Number } = mongoose.Schema.Types;
 
 const AssetSchema = new mongoose.Schema(
   {
     name: {
       type: String,
+      required: true,
+    },
+
+    assetID: {
+      type: Number,
       required: true,
     },
     model: {

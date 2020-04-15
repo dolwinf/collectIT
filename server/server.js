@@ -6,6 +6,7 @@ const connectDB = require("../server/config/db");
 const homeRoute = require("./routes/homeRoute");
 const signupRoute = require("./routes/signupRoute");
 const loginRoute = require("./routes/loginRoute");
+const assetRoute = require("./routes/assetRoute");
 
 connectDB();
 
@@ -13,7 +14,7 @@ app.use(cors());
 
 app.use(express.json());
 
-app.use(homeRoute, signupRoute, loginRoute);
+app.use(homeRoute, signupRoute, loginRoute, assetRoute);
 
 const PORT = process.env.PORT || 4000;
 
