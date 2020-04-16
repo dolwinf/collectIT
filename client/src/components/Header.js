@@ -53,6 +53,20 @@ function Header() {
             onClick={handleItemClick}
           />
         </Link>
+        <Link to="/login">
+          <Menu.Item
+            name="login"
+            active={activeItem === "login"}
+            onClick={handleItemClick}
+          />
+        </Link>
+        <Link to="/register">
+          <Menu.Item
+            name="register"
+            active={activeItem === "register"}
+            onClick={handleItemClick}
+          />
+        </Link>
       </Container>
       <Menu.Menu position="right">
         <Menu.Item>
