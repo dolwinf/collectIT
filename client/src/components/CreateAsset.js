@@ -8,6 +8,9 @@ import {
   Message,
   Header,
   Icon,
+  Segment,
+  Container,
+  Grid,
 } from "semantic-ui-react";
 import axios from "axios";
 
@@ -34,11 +37,12 @@ function CreateAsset() {
     setAsset((prevState) => ({ ...prevState, [name]: value }));
   }
   return (
-    <>
+    <Container>
       <Header as="h2" block>
         <Icon name="add" color="orange" />
         Create New Asset
       </Header>
+
       <Form loading={loading} error={Boolean(error)} success={success}>
         <Message error header="Oops!" content={error} />
         <Message
@@ -47,7 +51,7 @@ function CreateAsset() {
           header="Success!"
           content="Asset has been created"
         />
-        <Form.Group widths="equal">
+        <Form.Group>
           <Form.Field
             control={Input}
             name="name"
@@ -60,7 +64,7 @@ function CreateAsset() {
           <Form.Field
             control={Input}
             name="model"
-            label="model"
+            label="Model"
             placeholder="model"
             value={INITIAL_ASSET.model}
             onChange={handleChange}
@@ -68,7 +72,7 @@ function CreateAsset() {
           <Form.Field
             control={Input}
             name="type"
-            label="type"
+            label="Type"
             placeholder="type"
             value={INITIAL_ASSET.type}
             onChange={handleChange}
@@ -76,7 +80,7 @@ function CreateAsset() {
           <Form.Field
             control={Input}
             name="assetID"
-            label="assetID"
+            label="AssetID"
             placeholder="assetID"
             value={INITIAL_ASSET.assetID}
             onChange={handleChange}
@@ -84,7 +88,7 @@ function CreateAsset() {
           <Form.Field
             control={Input}
             name="brand"
-            label="brand"
+            label="Brand"
             placeholder="brand"
             value={INITIAL_ASSET.brand}
             onChange={handleChange}
@@ -92,7 +96,7 @@ function CreateAsset() {
           <Form.Field
             control={Input}
             name="category"
-            label="category"
+            label="Category"
             placeholder="category"
             value={INITIAL_ASSET.category}
             onChange={handleChange}
@@ -100,7 +104,7 @@ function CreateAsset() {
           <Form.Field
             control={Input}
             name="type"
-            label="type"
+            label="Type"
             placeholder="type"
             value={INITIAL_ASSET.type}
             onChange={handleChange}
@@ -108,7 +112,7 @@ function CreateAsset() {
           <Form.Field
             control={Input}
             name="assignee"
-            label="assignee"
+            label="Assignee"
             placeholder="assignee"
             value={INITIAL_ASSET.assignee}
             onChange={handleChange}
@@ -132,7 +136,7 @@ function CreateAsset() {
           type="submit"
         />
       </Form>
-    </>
+    </Container>
   );
 }
 
