@@ -5,6 +5,18 @@ import AssetList from "./AssetList";
 
 function Home() {
   const [assets, setAssets] = useState([]);
+
+  const handleRating = async (e, { rating }, id) => {
+    try {
+      const ratted = await axios.put("http://localhost:4000/api/asset/rating", {
+        rating,
+        id,
+      });
+      console.log(ratted);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     getAssets();
   }, []);
@@ -22,7 +34,14 @@ function Home() {
             </Table.Cell>
             <Table.Cell singleLine>{item.name}</Table.Cell>
             <Table.Cell>
-              <Rating icon="star" defaultRating={5} maxRating={5} />
+              <Rating
+                icon="star"
+                defaultRating={item.rating}
+                maxRating={5}
+                onRate={(e, { rating }) =>
+                  handleRating(e, { rating }, item._id)
+                }
+              />
             </Table.Cell>
             <Table.Cell>{item.model}</Table.Cell>
             <Table.Cell>{item.assignee}</Table.Cell>

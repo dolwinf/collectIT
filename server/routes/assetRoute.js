@@ -69,6 +69,24 @@ router.get("/api/asset/:id/", async (req, res) => {
   }
 });
 
+router.put("/api/asset/rating", async (req, res) => {
+  const { id, rating } = req.body;
+
+  try {
+    const updatedAsset = await Asset.findByIdAndUpdate(
+      { _id: id },
+      {
+        rating,
+      }
+    );
+    console.log({ updatedAsset });
+    res.status(201).json({ updatedAsset });
+    console.log({ updatedAsset });
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 router.put("/api/asset/update/:id", async (req, res) => {
   const id = req.params.id;
   const { name, model, brand, category, assignee, type, assetID } = req.body;

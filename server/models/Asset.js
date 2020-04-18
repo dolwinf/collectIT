@@ -29,6 +29,10 @@ const AssetSchema = new mongoose.Schema(
     description: {
       type: String,
     },
+    rating: {
+      type: Number,
+      default: 5,
+    },
   },
   {
     timestamps: true,
