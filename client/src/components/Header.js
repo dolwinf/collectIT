@@ -9,7 +9,7 @@ function Header() {
   const handleItemClick = (name) => setActiveItem({ activeItem: name });
   let user = true;
   return (
-    <Menu color="blue" stackable fluid inverted size="large" id="menu-text">
+    <Menu color="blue" stackable fluid inverted size="large">
       <Link to="/">
         <Menu.Item
           header
@@ -23,9 +23,17 @@ function Header() {
           </strong>
         </Menu.Item>
       </Link>
+
       {user && (
         <Container text>
           <Menu.Menu position="left">
+            <Link to="/">
+              <Menu.Item
+                name="home"
+                active={activeItem === "home"}
+                onClick={handleItemClick}
+              />
+            </Link>
             <Link to="/create">
               <Menu.Item
                 name="create"

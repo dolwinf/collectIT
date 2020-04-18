@@ -116,14 +116,7 @@ function CreateAsset() {
             onChange={handleChange}
             required
           />
-          <Form.Field
-            control={Input}
-            name="brand"
-            label="Brand"
-            placeholder="brand"
-            value={asset.brand}
-            onChange={handleChange}
-          />
+
           <Form.Field
             control={Input}
             name="category"
@@ -132,14 +125,7 @@ function CreateAsset() {
             value={asset.category}
             onChange={handleChange}
           />
-          <Form.Field
-            control={Input}
-            name="type"
-            label="Type"
-            placeholder="type"
-            value={asset.type}
-            onChange={handleChange}
-          />
+
           <Form.Field
             control={Input}
             name="assignee"

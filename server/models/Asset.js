@@ -16,16 +16,17 @@ const AssetSchema = new mongoose.Schema(
     model: {
       type: String,
     },
-    brand: {
+
+    category: {
       type: String,
     },
-    category: {
+    type: {
       type: String,
     },
     assignee: {
       type: String,
     },
-    type: {
+    description: {
       type: String,
     },
   },

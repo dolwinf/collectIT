@@ -21,6 +21,16 @@ router.post("/api/asset/create", async (req, res) => {
   }
 });
 
+router.get("/api/assets/", async (req, res) => {
+  try {
+    const foundAssets = await Asset.find();
+
+    res.status(201).json({ foundAssets });
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 router.get("/api/asset/track/", async (req, res) => {
   const { assetID } = req.body;
   try {
