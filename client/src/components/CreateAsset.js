@@ -36,6 +36,7 @@ function CreateAsset() {
 
   function handleChange(event) {
     const { name, value } = event.target;
+    console.log({ [name]: value });
     setAsset((prevState) => ({ ...prevState, [name]: value }));
   }
 
@@ -107,6 +108,8 @@ function CreateAsset() {
             value={asset.type}
             onChange={handleChange}
           />
+        </Form.Group>
+        <Form.Group>
           <Form.Field
             control={Input}
             name="assetID"
@@ -135,15 +138,15 @@ function CreateAsset() {
             onChange={handleChange}
           />
         </Form.Group>
-
         <Form.Field
           control={TextArea}
           name="description"
           label="Description"
           placeholder="Description"
-          onChange={handleChange}
           value={asset.description}
+          onChange={handleChange}
         />
+
         <Form.Field
           control={Button}
           disabled={disabled || loading}
