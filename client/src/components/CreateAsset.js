@@ -13,6 +13,7 @@ import {
   Grid,
 } from "semantic-ui-react";
 import axios from "axios";
+import catchErrors from "../utils/catchErrors";
 
 const INITIAL_ASSET = {
   name: "",
@@ -21,7 +22,8 @@ const INITIAL_ASSET = {
   category: "",
   assignee: "",
   type: "",
-  assetID: null,
+  description: "",
+  assetID: Number,
 };
 
 function CreateAsset() {
@@ -29,12 +31,34 @@ function CreateAsset() {
 
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [disabled, setDisabled] = useState(true);
+  const [disabled, setDisabled] = useState(false);
   const [error, setError] = useState("");
 
   function handleChange(event) {
     const { name, value } = event.target;
     setAsset((prevState) => ({ ...prevState, [name]: value }));
+  }
+
+  async function handleSubmit(e) {
+    try {
+      e.preventDefault();
+
+      setDisabled(true);
+      setLoading(true);
+      const assetData = await axios.post(
+        "http://localhost:4000/api/asset/create",
+
+        asset
+      );
+      setAsset(INITIAL_ASSET);
+      console.log(assetData);
+    } catch (error) {
+      catchErrors(error, setError);
+    } finally {
+      setLoading(false);
+      setDisabled(false);
+      setSuccess(true);
+    }
   }
   return (
     <Container>
@@ -43,7 +67,12 @@ function CreateAsset() {
         Create New Asset
       </Header>
 
-      <Form loading={loading} error={Boolean(error)} success={success}>
+      <Form
+        loading={loading}
+        error={Boolean(error)}
+        success={success}
+        onSubmit={handleSubmit}
+      >
         <Message error header="Oops!" content={error} />
         <Message
           success
@@ -57,8 +86,9 @@ function CreateAsset() {
             name="name"
             label="Name"
             placeholder="name"
-            value={INITIAL_ASSET.name}
+            value={asset.name}
             onChange={handleChange}
+            required
           />
 
           <Form.Field
@@ -66,7 +96,7 @@ function CreateAsset() {
             name="model"
             label="Model"
             placeholder="model"
-            value={INITIAL_ASSET.model}
+            value={asset.model}
             onChange={handleChange}
           />
           <Form.Field
@@ -74,7 +104,7 @@ function CreateAsset() {
             name="type"
             label="Type"
             placeholder="type"
-            value={INITIAL_ASSET.type}
+            value={asset.type}
             onChange={handleChange}
           />
           <Form.Field
@@ -82,15 +112,16 @@ function CreateAsset() {
             name="assetID"
             label="AssetID"
             placeholder="assetID"
-            value={INITIAL_ASSET.assetID}
+            value={asset.assetID}
             onChange={handleChange}
+            required
           />
           <Form.Field
             control={Input}
             name="brand"
             label="Brand"
             placeholder="brand"
-            value={INITIAL_ASSET.brand}
+            value={asset.brand}
             onChange={handleChange}
           />
           <Form.Field
@@ -98,7 +129,7 @@ function CreateAsset() {
             name="category"
             label="Category"
             placeholder="category"
-            value={INITIAL_ASSET.category}
+            value={asset.category}
             onChange={handleChange}
           />
           <Form.Field
@@ -106,7 +137,7 @@ function CreateAsset() {
             name="type"
             label="Type"
             placeholder="type"
-            value={INITIAL_ASSET.type}
+            value={asset.type}
             onChange={handleChange}
           />
           <Form.Field
@@ -114,7 +145,7 @@ function CreateAsset() {
             name="assignee"
             label="Assignee"
             placeholder="assignee"
-            value={INITIAL_ASSET.assignee}
+            value={asset.assignee}
             onChange={handleChange}
           />
         </Form.Group>
@@ -125,13 +156,12 @@ function CreateAsset() {
           label="Description"
           placeholder="Description"
           onChange={handleChange}
-          value={INITIAL_ASSET.description}
+          value={asset.description}
         />
         <Form.Field
           control={Button}
           disabled={disabled || loading}
           color="blue"
-          icon="pencil alternate"
           content="Submit"
           type="submit"
         />

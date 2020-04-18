@@ -26,9 +26,10 @@ function Login() {
     try {
       setLoading(true);
       setError("");
-      const url = `/api/login`;
-      const payload = { ...user };
-      const response = await axios.post(url, payload);
+      console.log({ ...user });
+      // const url = `/api/login`;
+      // const payload = { ...user };
+      // const response = await axios.post(url, payload);
       //   handleLogin(response.data);
     } catch (error) {
       catchErrors(error, setError);

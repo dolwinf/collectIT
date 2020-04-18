@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const connectDB = require("../server/config/db");
+var cookieParser = require("cookie-parser");
 
 const homeRoute = require("./routes/homeRoute");
 const signupRoute = require("./routes/signupRoute");
@@ -11,7 +12,7 @@ const assetRoute = require("./routes/assetRoute");
 connectDB();
 
 app.use(cors());
-
+app.use(cookieParser());
 app.use(express.json());
 
 app.use(homeRoute, signupRoute, loginRoute, assetRoute);
