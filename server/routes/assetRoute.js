@@ -69,6 +69,20 @@ router.get("/api/asset/:id/", async (req, res) => {
   }
 });
 
+router.get("/api/asset/search", async (req, res) => {
+  const assetID = req.body.assetID;
+  try {
+    const foundAsset = await Asset.findOne({
+      assetID,
+    });
+    console.log({ foundAsset });
+    res.status(201).json({ foundAsset });
+    console.log({ foundAsset });
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 router.put("/api/asset/rating", async (req, res) => {
   const { id, rating } = req.body;
 

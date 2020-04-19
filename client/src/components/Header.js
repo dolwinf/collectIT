@@ -1,11 +1,26 @@
 import React, { useState } from "react";
-import { Input, Menu, Image, Container } from "semantic-ui-react";
+import { Input, Menu, Image, Container, Form } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import logo from "../images/logo.png";
+import axios from "axios";
 
 function Header() {
   const [activeItem, setActiveItem] = useState("home");
+  const [search, setSearch] = useState("");
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const foundAssetID = await axios.get(
+      "http://localhost:4000/api/asset/search",
+      search
+    );
+    console.log(foundAssetID);
+  };
+
+  const handleChange = (event) => {
+    setSearch(event.target.value);
+    console.log(search);
+  };
   const handleItemClick = (name) => setActiveItem({ activeItem: name });
   let user = true;
   return (
@@ -82,7 +97,21 @@ function Header() {
       {user && (
         <Menu.Menu position="right">
           <Menu.Item>
-            <Input icon="search" placeholder="Search Asset ID..." />
+            <Form onSubmit={handleSubmit}>
+              {/* <Input
+                icon="search"
+                placeholder="Search Asset ID..."
+                onChange={handleChange}
+                value={search}
+              /> */}
+              <Form.Field
+                control={Input}
+                name="search"
+                placeholder="search"
+                value={search}
+                onChange={handleChange}
+              />
+            </Form>
           </Menu.Item>
           <Menu.Item
             name="logout"
