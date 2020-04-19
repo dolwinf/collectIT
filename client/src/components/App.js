@@ -1,37 +1,30 @@
-import React from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import React, { useContext, useReducer } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Header from "./Header";
 import Home from "./Home";
 import CreateAsset from "./CreateAsset";
 import Login from "./Login";
 import Register from "./Register";
-
-let isLoggedIn = false;
+import PrivateRoute from "./PrivateRoute";
+import Context from "../context";
+import reducer from "../reducer";
 
 function App() {
+  const initialState = useContext(Context);
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const { isLoggedIn } = state;
   return (
     <Router>
-      <Header />
-      <Switch>
-        {isLoggedIn && (
-          <div>
-            <Route path="/create" component={CreateAsset} />
-            <Route exact path="/" component={Home} />
-            <Redirect exact from="/login" to="/" />
-            <Redirect exact from="/register" to="/" />
-          </div>
-        )}
-        <Redirect exact from="/create" to="/" />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/register" component={Register} />
-        <Route exact path="/" component={Login} />
-      </Switch>
+      <Context.Provider value={{ state, dispatch }}>
+        <Header />
+        <Switch>
+          <PrivateRoute exact path="/create" component={CreateAsset} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/register" component={Register} />
+          <PrivateRoute exact path="/" component={Home} />
+        </Switch>
+      </Context.Provider>
     </Router>
   );
 }

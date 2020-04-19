@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import { Button, Form, Icon, Message, Segment } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { Button, Form, Message, Segment } from "semantic-ui-react";
+import { Link, Redirect } from "react-router-dom";
 import axios from "axios";
-import catchErrors from "../utils/catchErrors";
-import { handleLogin } from "../utils/handleLogin";
+
+import cookie from "js-cookie";
+import Context from "../context";
 
 const INITIAL_USER = {
   email: "",
@@ -12,22 +13,53 @@ const INITIAL_USER = {
 
 function Login() {
   const [user, setUser] = useState(INITIAL_USER);
-  const [disabled, setDisabled] = useState(true);
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const { dispatch } = useContext(Context);
+
+  const catchErrors = (error, displayError) => {
+    let errorMsg;
+    if (error.response) {
+      // The request was made and the server responsed with a status code that is not in the range of 2XX
+      errorMsg = error.response.data;
+      console.error("Error response", errorMsg);
+
+      // For Cloudinary image uploads
+      if (error.response.data.error) {
+        errorMsg = error.response.data.error.message;
+      }
+    } else if (error.request) {
+      // The request was made, but no response was received
+      errorMsg = error.request;
+      console.error("Error request", errorMsg);
+    } else {
+      // Something else happened in making the request that triggered an error
+      errorMsg = error.message;
+      console.error("Error message", errorMsg);
+    }
+    displayError(errorMsg);
+  };
+
+  const handleLogin = (token) => {
+    dispatch({ type: "LOGIN_USER" });
+    cookie.set("token", token);
+
+    return <Redirect to="/" />;
+  };
 
   function handleChange(event) {
     const { name, value } = event.target;
     setUser((prevState) => ({ ...prevState, [name]: value }));
   }
 
-  async function handleSubmit(event) {
+  async function HandleSubmit(event) {
     event.preventDefault();
 
     try {
       setLoading(true);
       setError("");
-      console.log({ ...user });
+
       const payload = { ...user };
       const response = await axios.post(
         "http://localhost:4000/api/login",
@@ -49,7 +81,7 @@ function Login() {
         content="Log in with email and password"
         color="blue"
       />
-      <Form error={Boolean(error)} loading={loading} onSubmit={handleSubmit}>
+      <Form error={Boolean(error)} loading={loading} onSubmit={HandleSubmit}>
         <Message error header="Oops!" content={error} />
         <Segment>
           <Form.Input

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Table, Rating } from "semantic-ui-react";
-import AssetList from "./AssetList";
 
 function Home() {
   const [assets, setAssets] = useState([]);

@@ -4,13 +4,10 @@ import {
   Input,
   TextArea,
   Button,
-  Image,
   Message,
   Header,
   Icon,
-  Segment,
   Container,
-  Grid,
 } from "semantic-ui-react";
 import axios from "axios";
 import catchErrors from "../utils/catchErrors";

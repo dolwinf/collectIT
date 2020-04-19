@@ -1,13 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { Redirect } from "react-router-dom";
 import { Input, Menu, Image, Container, Form } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import logo from "../images/logo.png";
 import axios from "axios";
+import cookie from "js-cookie";
+import Context from "../context";
 
 function Header() {
   const [activeItem, setActiveItem] = useState("home");
   const [search, setSearch] = useState("");
 
+  const { state } = useContext(Context);
+  const { isLoggedIn } = state;
+  const { dispatch } = useContext(Context);
+  const handleLogout = () => {
+    cookie.remove("token");
+
+    dispatch({ type: "LOGOUT_USER" });
+    return <Redirect to="/login" />;
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     const foundAssetID = await axios.get(
@@ -22,7 +34,7 @@ function Header() {
     console.log(search);
   };
   const handleItemClick = (name) => setActiveItem({ activeItem: name });
-  let isLoggedIn = false;
+
   return (
     <Menu color="blue" stackable fluid inverted size="large">
       <Link to="/">
@@ -116,7 +128,7 @@ function Header() {
           <Menu.Item
             name="logout"
             active={activeItem === "logout"}
-            onClick={handleItemClick}
+            onClick={handleLogout}
           />
         </Menu.Menu>
       )}
