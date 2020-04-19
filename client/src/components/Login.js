@@ -3,6 +3,7 @@ import { Button, Form, Icon, Message, Segment } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import catchErrors from "../utils/catchErrors";
+import { handleLogin } from "../utils/handleLogin";
 
 const INITIAL_USER = {
   email: "",
@@ -27,10 +28,12 @@ function Login() {
       setLoading(true);
       setError("");
       console.log({ ...user });
-      // const url = `/api/login`;
-      // const payload = { ...user };
-      // const response = await axios.post(url, payload);
-      //   handleLogin(response.data);
+      const payload = { ...user };
+      const response = await axios.post(
+        "http://localhost:4000/api/login",
+        payload
+      );
+      handleLogin(response.data);
     } catch (error) {
       catchErrors(error, setError);
     } finally {
@@ -72,7 +75,7 @@ function Login() {
             onChange={handleChange}
           />
           <Button
-            disabled={disabled || loading}
+            // disabled={disabled || loading}
             icon="sign in"
             type="submit"
             color="orange"
