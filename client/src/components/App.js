@@ -12,7 +12,7 @@ import CreateAsset from "./CreateAsset";
 import Login from "./Login";
 import Register from "./Register";
 
-let isLoggedIn = true;
+let isLoggedIn = false;
 
 function App() {
   return (
@@ -27,7 +27,7 @@ function App() {
             <Redirect exact from="/register" to="/" />
           </div>
         )}
-
+        <Redirect exact from="/create" to="/" />
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/" component={Login} />

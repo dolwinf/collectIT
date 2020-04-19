@@ -22,7 +22,7 @@ function Header() {
     console.log(search);
   };
   const handleItemClick = (name) => setActiveItem({ activeItem: name });
-  let user = true;
+  let isLoggedIn = false;
   return (
     <Menu color="blue" stackable fluid inverted size="large">
       <Link to="/">
@@ -39,7 +39,7 @@ function Header() {
         </Menu.Item>
       </Link>
 
-      {user && (
+      {isLoggedIn && (
         <Container text>
           <Menu.Menu position="left">
             <Link to="/">
@@ -74,7 +74,7 @@ function Header() {
         </Container>
       )}
 
-      {!user && (
+      {!isLoggedIn && (
         <Container text>
           <Menu.Menu position="right">
             <Link to="/login">
@@ -94,7 +94,7 @@ function Header() {
           </Menu.Menu>
         </Container>
       )}
-      {user && (
+      {isLoggedIn && (
         <Menu.Menu position="right">
           <Menu.Item>
             <Form onSubmit={handleSubmit}>
