@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Button, Form, Icon, Message, Segment } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import catchErrors from "../utils/catchErrors";
+import cookie from "js-cookie";
+import Context from "../context";
 
 const INITIAL_USER = {
   name: "",
@@ -15,6 +17,15 @@ function Register() {
   const [disabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const { dispatch } = useContext(Context);
+
+  const history = useHistory();
+  const handleLogin = (token) => {
+    dispatch({ type: "LOGIN_USER" });
+    cookie.set("token", token);
+
+    history.push("/");
+  };
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -27,10 +38,10 @@ function Register() {
     try {
       setLoading(true);
       setError("");
-      const url = `/api/register`;
+      const url = `http://localhost:4000/api/signup`;
       const payload = { ...user };
       const response = await axios.post(url, payload);
-      //   handleLogin(response.data);
+      handleLogin(response.data);
     } catch (error) {
       catchErrors(error, setError);
     } finally {
@@ -82,7 +93,7 @@ function Register() {
             value={user.password}
             onChange={handleChange}
           />
-          <Form.Input
+          {/* <Form.Input
             fluid
             icon="lock"
             iconPosition="left"
@@ -90,11 +101,11 @@ function Register() {
             placeholder="Re-enter password"
             name="rpassword"
             type="password"
-            value={user.password}
+            value={user.password1}
             onChange={handleChange}
-          />
+          /> */}
           <Button
-            disabled={disabled || loading}
+            // disabled={disabled || loading}
             icon="signup"
             type="submit"
             color="orange"
