@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Input, Menu, Image, Container, Form } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import logo from "../images/logo.png";
@@ -14,11 +14,12 @@ function Header() {
   const { state } = useContext(Context);
   const { isLoggedIn } = state;
   const { dispatch } = useContext(Context);
+  const history = useHistory();
   const handleLogout = () => {
     cookie.remove("token");
 
     dispatch({ type: "LOGOUT_USER" });
-    return <Redirect to="/login" />;
+    history.push("/login");
   };
   const handleSubmit = async (e) => {
     e.preventDefault();

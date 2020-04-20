@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { Table, Rating } from "semantic-ui-react";
+import { useHistory } from "react-router-dom";
+import Context from "../context";
 
 function Home() {
   const [assets, setAssets] = useState([]);
+  const { state } = useContext(Context);
+  const { isLoggedIn } = state;
+  const history = useHistory();
 
   const handleRating = async (e, { rating }, id) => {
     try {
@@ -16,7 +21,14 @@ function Home() {
       console.log(error);
     }
   };
+
+  const checkIsLoggedIn = () => {
+    if (isLoggedIn) {
+      history.push("/");
+    }
+  };
   useEffect(() => {
+    checkIsLoggedIn();
     getAssets();
   }, []);
   async function getAssets() {

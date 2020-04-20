@@ -1,7 +1,7 @@
 var jwt = require("jsonwebtoken");
 
 module.exports = function (req, res, next) {
-  const token = req.header("x-auth-token");
+  const token = req.headers.authorization;
   console.log(token);
 
   //Check if no token
@@ -12,7 +12,7 @@ module.exports = function (req, res, next) {
   //Verify token
   jwt.verify(token, "secretqazwsx12345", function (err, decoded) {
     if (err) throw err;
-    // req.user = decoded.user;
+    req.user = decoded.user;
     next();
   });
 };

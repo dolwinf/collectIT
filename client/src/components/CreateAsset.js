@@ -11,6 +11,7 @@ import {
 } from "semantic-ui-react";
 import axios from "axios";
 import catchErrors from "../utils/catchErrors";
+import cookie from "js-cookie";
 
 const INITIAL_ASSET = {
   name: "",
@@ -38,6 +39,8 @@ function CreateAsset() {
   }
 
   async function handleSubmit(e) {
+    const token = cookie.get("token");
+    console.log(token);
     try {
       e.preventDefault();
 
@@ -46,7 +49,10 @@ function CreateAsset() {
       const assetData = await axios.post(
         "http://localhost:4000/api/asset/create",
 
-        asset
+        asset,
+        {
+          headers: { Authorization: `${token}` },
+        }
       );
       setAsset(INITIAL_ASSET);
       console.log(assetData);

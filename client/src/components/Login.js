@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Button, Form, Message, Segment } from "semantic-ui-react";
-import { Link, Redirect } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 
 import cookie from "js-cookie";
@@ -17,7 +17,7 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const { dispatch } = useContext(Context);
-
+  const history = useHistory();
   const catchErrors = (error, displayError) => {
     let errorMsg;
     if (error.response) {
@@ -45,7 +45,7 @@ function Login() {
     dispatch({ type: "LOGIN_USER" });
     cookie.set("token", token);
 
-    return <Redirect to="/" />;
+    history.push("/");
   };
 
   function handleChange(event) {

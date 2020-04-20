@@ -1,7 +1,8 @@
 const router = require("express").Router();
 const Asset = require("../models/Asset");
+const auth = require("../middleware/auth");
 
-router.post("/api/asset/create", async (req, res) => {
+router.post("/api/asset/create", auth, async (req, res) => {
   const {
     name,
     model,
