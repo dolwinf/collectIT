@@ -9,7 +9,7 @@ import Context from "../context";
 
 function Header() {
   const [activeItem, setActiveItem] = useState("home");
-  const [search, setSearch] = useState("");
+  const [assetID, setAssetID] = useState("");
 
   const { state } = useContext(Context);
   const { isLoggedIn } = state;
@@ -23,16 +23,17 @@ function Header() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const foundAssetID = await axios.get(
-      "http://localhost:4000/api/asset/search",
-      search
+      "http://localhost:4000/api/asset/track",
+      assetID
     );
     console.log(foundAssetID);
   };
 
-  const handleChange = (event) => {
-    setSearch(event.target.value);
-    console.log(search);
+  const handleChange = (e) => {
+    setAssetID(e.target.value);
+    console.log(assetID);
   };
   const handleItemClick = (name) => setActiveItem({ activeItem: name });
 
@@ -108,30 +109,23 @@ function Header() {
         </Container>
       )}
       {isLoggedIn && (
-        <Menu.Menu position="right">
-          <Menu.Item>
-            <Form onSubmit={handleSubmit}>
-              {/* <Input
+        <Form onSubmit={handleSubmit}>
+          <Menu.Menu position="right">
+            <Menu.Item>
+              <Input
                 icon="search"
                 placeholder="Search Asset ID..."
                 onChange={handleChange}
-                value={search}
-              /> */}
-              <Form.Field
-                control={Input}
-                name="search"
-                placeholder="search"
-                value={search}
-                onChange={handleChange}
+                value={assetID}
               />
-            </Form>
-          </Menu.Item>
-          <Menu.Item
-            name="logout"
-            active={activeItem === "logout"}
-            onClick={handleLogout}
-          />
-        </Menu.Menu>
+            </Menu.Item>
+            <Menu.Item
+              name="logout"
+              active={activeItem === "logout"}
+              onClick={handleLogout}
+            />
+          </Menu.Menu>
+        </Form>
       )}
     </Menu>
   );

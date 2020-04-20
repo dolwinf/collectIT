@@ -10,7 +10,7 @@ const AssetSchema = new mongoose.Schema(
     },
 
     assetID: {
-      type: Number,
+      type: String,
       required: true,
     },
     model: {
