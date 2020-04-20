@@ -21,20 +21,21 @@ function Header() {
     dispatch({ type: "LOGOUT_USER" });
     history.push("/login");
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const foundAssetID = await axios.get(
-      "http://localhost:4000/api/asset/track",
-      assetID
-    );
-    console.log(foundAssetID);
+    try {
+      const returnedAsset = await axios.get(
+        "http://localhost:4000/api/asset/track",
+        assetID
+      );
+      console.log(returnedAsset);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
-  const handleChange = (e) => {
-    setAssetID(e.target.value);
-    console.log(assetID);
-  };
   const handleItemClick = (name) => setActiveItem({ activeItem: name });
 
   return (
@@ -112,10 +113,9 @@ function Header() {
         <Form onSubmit={handleSubmit}>
           <Menu.Menu position="right">
             <Menu.Item>
-              <Input
-                icon="search"
+              <input
                 placeholder="Search Asset ID..."
-                onChange={handleChange}
+                onChange={(e) => setAssetID(e.target.value)}
                 value={assetID}
               />
             </Menu.Item>

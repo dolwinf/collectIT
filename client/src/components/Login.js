@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Button, Form, Message, Segment } from "semantic-ui-react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
@@ -16,8 +16,16 @@ function Login() {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const { dispatch } = useContext(Context);
+  const { state, dispatch } = useContext(Context);
   const history = useHistory();
+
+  // useEffect(() => {
+  //   const { isLoggedIn } = state;
+  //   if (isLoggedIn) {
+  //     history.push("/home");
+  //   }
+  // }, []);
+
   const catchErrors = (error, displayError) => {
     let errorMsg;
     if (error.response) {

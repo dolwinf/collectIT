@@ -44,6 +44,7 @@ router.get("/api/assets/", async (req, res) => {
 
 router.get("/api/asset/track/", async (req, res) => {
   const { assetID } = req.body;
+
   try {
     const foundAsset = await Asset.findOne({
       assetID,
