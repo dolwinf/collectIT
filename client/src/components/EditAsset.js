@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import {
   Form,
   Input,
@@ -10,27 +11,24 @@ import {
   Container,
 } from "semantic-ui-react";
 import axios from "axios";
-import catchErrors from "../utils/catchErrors";
 import cookie from "js-cookie";
+import catchErrors from "../utils/catchErrors";
 
-const INITIAL_ASSET = {
-  name: "",
-  model: "",
-  brand: "",
-  category: "",
-  assignee: "",
-  type: "",
-  description: "",
-  assetID: Number,
-};
-
-function CreateAsset() {
-  const [asset, setAsset] = useState(INITIAL_ASSET);
+function EditAsset(props) {
+  const [asset, setAsset] = useState();
 
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [error, setError] = useState("");
+  const history = useHistory();
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/api/asset/${props.match.params.id}`)
+      .then((response) => {
+        setAsset(response.data.foundAsset);
+      });
+  }, []);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -39,6 +37,7 @@ function CreateAsset() {
   }
 
   async function handleSubmit(e) {
+    e.preventDefault();
     const token = cookie.get("token");
     console.log(token);
     try {
@@ -46,29 +45,25 @@ function CreateAsset() {
 
       setDisabled(true);
       setLoading(true);
-      const assetData = await axios.post(
-        "http://localhost:4000/api/asset/create",
-
+      const assetData = await axios.put(
+        `http://localhost:4000/api/asset/update/${props.match.params.id}`,
         asset,
         {
           headers: { Authorization: `${token}` },
         }
       );
-      setAsset(INITIAL_ASSET);
+
       console.log(assetData);
+      history.push("/");
     } catch (error) {
       catchErrors(error, setError);
-    } finally {
-      setLoading(false);
-      setDisabled(false);
-      setSuccess(true);
     }
   }
-  return (
+  return asset ? (
     <Container>
       <Header as="h2" block>
-        <Icon name="add" color="orange" />
-        Create New Asset
+        <Icon name="edit" color="orange" />
+        Edit Asset
       </Header>
 
       <Form
@@ -159,7 +154,9 @@ function CreateAsset() {
         />
       </Form>
     </Container>
+  ) : (
+    ""
   );
 }
 
-export default CreateAsset;
+export default EditAsset;

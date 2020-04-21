@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { Table, Rating } from "semantic-ui-react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import Context from "../context";
 
 function Home() {
@@ -12,13 +12,10 @@ function Home() {
 
   const handleRating = async (e, { rating }, id) => {
     try {
-      const ratted = await axios.put(
-        "http://ec2-54-66-193-38.ap-southeast-2.compute.amazonaws.com/api/asset/rating",
-        {
-          rating,
-          id,
-        }
-      );
+      const ratted = await axios.put("http://localhost:4000/api/asset/rating", {
+        rating,
+        id,
+      });
       console.log(ratted);
     } catch (error) {
       console.log(error);
@@ -36,16 +33,16 @@ function Home() {
   }, []);
   async function getAssets() {
     try {
-      const response = await axios.get(
-        "http://ec2-54-66-193-38.ap-southeast-2.compute.amazonaws.com/api/assets/"
-      );
+      const response = await axios.get("http://localhost:4000/api/assets/");
       console.log(response.data.foundAssets);
       setAssets(
         response.data.foundAssets.map((item) => (
           <Table.Row>
             <Table.Cell>
               <span style={{ fontSize: "2em" }}>
-                <strong>{item.assetID}</strong>
+                <strong>
+                  <Link to={`/asset/edit/${item._id}`}>{item.assetID}</Link>
+                </strong>
               </span>
             </Table.Cell>
             <Table.Cell singleLine>{item.name}</Table.Cell>

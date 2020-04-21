@@ -6,6 +6,7 @@ import Home from "./Home";
 import CreateAsset from "./CreateAsset";
 import Login from "./Login";
 import Register from "./Register";
+import EditAsset from "./EditAsset";
 import PrivateRoute from "./PrivateRoute";
 import Context from "../context";
 import reducer from "../reducer";
@@ -23,6 +24,7 @@ function App() {
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
           <PrivateRoute exact path="/" component={Home} />
+          <PrivateRoute exact path="/asset/edit/:id" component={EditAsset} />
         </Switch>
       </Context.Provider>
     </Router>

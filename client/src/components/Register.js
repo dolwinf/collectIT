@@ -38,7 +38,7 @@ function Register() {
     try {
       setLoading(true);
       setError("");
-      const url = `http://ec2-54-66-193-38.ap-southeast-2.compute.amazonaws.com/api/signup`;
+      const url = `http://localhost:4000/api/signup`;
       const payload = { ...user };
       const response = await axios.post(url, payload);
       handleLogin(response.data);
