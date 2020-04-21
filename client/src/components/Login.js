@@ -70,7 +70,7 @@ function Login() {
 
       const payload = { ...user };
       const response = await axios.post(
-        "http://localhost:4000/api/login",
+        "http://ec2-54-66-193-38.ap-southeast-2.compute.amazonaws.com/api/login",
         payload
       );
       handleLogin(response.data);

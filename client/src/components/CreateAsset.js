@@ -47,7 +47,7 @@ function CreateAsset() {
       setDisabled(true);
       setLoading(true);
       const assetData = await axios.post(
-        "http://localhost:4000/api/asset/create",
+        "http://ec2-54-66-193-38.ap-southeast-2.compute.amazonaws.com/api/asset/create",
 
         asset,
         {

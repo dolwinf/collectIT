@@ -27,7 +27,7 @@ function Header() {
 
     try {
       const returnedAsset = await axios.get(
-        "http://localhost:4000/api/asset/track",
+        "http://ec2-54-66-193-38.ap-southeast-2.compute.amazonaws.com/api/asset/track",
         assetID
       );
       console.log(returnedAsset);
