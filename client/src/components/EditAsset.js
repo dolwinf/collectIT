@@ -30,6 +30,14 @@ function EditAsset(props) {
       });
   }, []);
 
+  async function handleDelete(id) {
+    axios
+      .delete(`http://localhost:4000/api/asset/delete/${id}`)
+      .then((response) => {
+        history.push("/");
+      });
+  }
+
   function handleChange(event) {
     const { name, value } = event.target;
     console.log({ [name]: value });
@@ -149,10 +157,16 @@ function EditAsset(props) {
           control={Button}
           disabled={disabled || loading}
           color="blue"
-          content="Submit"
+          content="Modify Asset"
           type="submit"
         />
       </Form>
+      <br />
+      <Button
+        color="red"
+        content="Delete Asset"
+        onClick={(e) => handleDelete(asset._id)}
+      />
     </Container>
   ) : (
     ""
