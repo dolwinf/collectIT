@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "cd client && react-scripts start",
+    "install": "cd client && npm install",
+    "serverinstall": "cd server && npm install",
     "build": "cd client && react-scripts build",
     "eject": "cd client && react-scripts eject",
     "server": "cd server && node server.js"
