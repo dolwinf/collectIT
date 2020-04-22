@@ -42,16 +42,15 @@ router.get("/api/assets/", async (req, res) => {
   }
 });
 
-router.get("/api/asset/track/", async (req, res) => {
+router.post("/api/asset/track/", async (req, res) => {
   const { assetID } = req.body;
-
+  console.log(assetID);
   try {
-    const foundAsset = await Asset.findOne({
+    const foundAsset = await Asset.find({
       assetID,
     });
     console.log({ foundAsset });
     res.status(201).json({ foundAsset });
-    console.log({ foundAsset });
   } catch (error) {
     console.error(error);
   }
@@ -91,7 +90,16 @@ router.put("/api/asset/rating", async (req, res) => {
 
 router.put("/api/asset/update/:id", async (req, res) => {
   const id = req.params.id;
-  const { name, model, brand, category, assignee, type, assetID } = req.body;
+  const {
+    name,
+    model,
+    brand,
+    category,
+    assignee,
+    type,
+    assetID,
+    description,
+  } = req.body;
   try {
     const updatedAsset = await Asset.findByIdAndUpdate(
       { _id: id },
@@ -103,6 +111,7 @@ router.put("/api/asset/update/:id", async (req, res) => {
         assignee,
         type,
         assetID,
+        description,
       }
     );
     console.log({ updatedAsset });

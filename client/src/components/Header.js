@@ -22,13 +22,19 @@ function Header() {
     history.push("/login");
   };
 
+  const handleInputChange = (e) => {
+    console.log(e.target.value);
+    setAssetID(e.target.value);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const returnedAsset = await axios.get(
+      const returnedAsset = await axios.post(
         "http://localhost:4000/api/asset/track",
-        assetID
+
+        { assetID }
       );
       console.log(returnedAsset);
     } catch (e) {
@@ -115,7 +121,7 @@ function Header() {
             <Menu.Item>
               <input
                 placeholder="Search Asset ID..."
-                onChange={(e) => setAssetID(e.target.value)}
+                onChange={handleInputChange}
                 value={assetID}
               />
             </Menu.Item>
