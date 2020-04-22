@@ -36,7 +36,8 @@ function Header() {
 
         { assetID }
       );
-      console.log(returnedAsset);
+      console.log(returnedAsset.data.foundAsset[0]._id);
+      history.push(`/asset/edit/${returnedAsset.data.foundAsset[0]._id}`);
     } catch (e) {
       console.log(e);
     }
