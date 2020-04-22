@@ -20,3 +20,4 @@ CollectIT is a full stack IT Asset Management application currently in it's fina
 - Node
 - Express
 - MongoDB
+- JWT for user authentication
