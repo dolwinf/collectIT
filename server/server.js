@@ -8,6 +8,7 @@ const homeRoute = require("./routes/homeRoute");
 const signupRoute = require("./routes/signupRoute");
 const loginRoute = require("./routes/loginRoute");
 const assetRoute = require("./routes/assetRoute");
+const accountsRoute = require("./routes/accountsRoute");
 
 connectDB();
 
@@ -15,7 +16,7 @@ app.use(cors({ credentials: true, origin: "*" }));
 app.use(cookieParser());
 app.use(express.json());
 
-app.use(homeRoute, signupRoute, loginRoute, assetRoute);
+app.use(homeRoute, signupRoute, loginRoute, assetRoute, accountsRoute);
 
 const PORT = process.env.PORT || 4000;
 

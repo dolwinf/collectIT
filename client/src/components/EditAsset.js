@@ -20,14 +20,28 @@ function EditAsset(props) {
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(false);
+  const [users, setUsers] = useState([]);
   const [error, setError] = useState("");
   const history = useHistory();
+
+  async function getUsers() {
+    const url = `http://localhost:4000/api/users`;
+    const token = cookie.get("token");
+    const payload = { headers: { Authorization: token } };
+    const response = await axios.get(url, payload);
+    console.log(response.data.foundUsers);
+    setUsers(response.data.foundUsers);
+  }
+
+  async function getCurrentAsset() {
+    const url = `http://localhost:4000/api/asset/${props.match.params.id}`;
+    const response = await axios.get(url);
+    setAsset(response.data.foundAsset);
+  }
+
   useEffect(() => {
-    axios
-      .get(`http://localhost:4000/api/asset/${props.match.params.id}`)
-      .then((response) => {
-        setAsset(response.data.foundAsset);
-      });
+    getCurrentAsset();
+    getUsers();
   }, []);
 
   async function handleDelete(id) {
