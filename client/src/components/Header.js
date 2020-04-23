@@ -78,10 +78,10 @@ function Header() {
                 onClick={handleItemClick}
               />
             </Link>
-            <Link to="/account">
+            <Link to="/search">
               <Menu.Item
-                name="account"
-                active={activeItem === "account"}
+                name="search"
+                active={activeItem === "search"}
                 onClick={handleItemClick}
               />
             </Link>

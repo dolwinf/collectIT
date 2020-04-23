@@ -70,6 +70,38 @@ router.get("/api/asset/:id/", async (req, res) => {
   }
 });
 
+router.post("/api/search", auth, async (req, res) => {
+  const {
+    name,
+    model,
+    brand,
+    category,
+    assignee,
+    type,
+    description,
+    assetID,
+  } = req.body;
+  try {
+    const foundAssets = await Asset.find({
+      $or: [
+        { name },
+        { model },
+        { brand },
+        { category },
+        { assignee },
+        { type },
+        { description },
+        { assetID },
+      ],
+    });
+    console.log({ foundAssets });
+    res.status(201).json({ foundAssets });
+    console.log({ foundAssets });
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 router.put("/api/asset/rating", async (req, res) => {
   const { id, rating } = req.body;
 

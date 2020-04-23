@@ -8,8 +8,11 @@ import {
   Header,
   Icon,
   Container,
+  Table,
+  Rating,
 } from "semantic-ui-react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import catchErrors from "../utils/catchErrors";
 import cookie from "js-cookie";
 
@@ -23,9 +26,8 @@ const INITIAL_ASSET = {
   description: "",
   assetID: "",
 };
-
-function CreateAsset() {
-  const [asset, setAsset] = useState(INITIAL_ASSET);
+function SearchAsset() {
+  const [assets, setAssets] = useState(INITIAL_ASSET);
 
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -35,8 +37,20 @@ function CreateAsset() {
   function handleChange(event) {
     const { name, value } = event.target;
     console.log({ [name]: value });
-    setAsset((prevState) => ({ ...prevState, [name]: value }));
+    setAssets((prevState) => ({ ...prevState, [name]: value }));
   }
+
+  const handleRating = async (e, { rating }, id) => {
+    try {
+      const ratted = await axios.put("http://localhost:4000/api/asset/rating", {
+        rating,
+        id,
+      });
+      console.log(ratted);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   async function handleSubmit(e) {
     const token = cookie.get("token");
@@ -47,14 +61,42 @@ function CreateAsset() {
       setDisabled(true);
       setLoading(true);
       const assetData = await axios.post(
-        "http://localhost:4000/api/asset/create",
+        "http://localhost:4000/api/search",
 
-        asset,
+        assets,
         {
           headers: { Authorization: `${token}` },
         }
       );
-      setAsset(INITIAL_ASSET);
+      setAssets(
+        assetData.data.foundAssets.map((item) => (
+          <Table.Row>
+            <Table.Cell>
+              <span style={{ fontSize: "2em" }}>
+                <strong>
+                  <Link to={`/asset/edit/${item._id}`}>{item.assetID}</Link>
+                </strong>
+              </span>
+            </Table.Cell>
+            <Table.Cell singleLine>{item.name}</Table.Cell>
+            <Table.Cell>
+              <Rating
+                icon="star"
+                defaultRating={item.rating}
+                maxRating={5}
+                onRate={(e, { rating }) =>
+                  handleRating(e, { rating }, item._id)
+                }
+              />
+            </Table.Cell>
+            <Table.Cell>{item.model}</Table.Cell>
+            <Table.Cell>{item.assignee}</Table.Cell>
+            <Table.Cell>{item.category}</Table.Cell>
+            <Table.Cell>{item.description}</Table.Cell>
+            <Table.Cell>{item.type}</Table.Cell>
+          </Table.Row>
+        ))
+      );
       console.log(assetData);
     } catch (error) {
       catchErrors(error, setError);
@@ -67,8 +109,8 @@ function CreateAsset() {
   return (
     <Container>
       <Header as="h2" block>
-        <Icon name="add" color="orange" />
-        Create New Asset
+        <Icon name="search" color="orange" />
+        Search Assets
       </Header>
 
       <Form
@@ -82,7 +124,7 @@ function CreateAsset() {
           success
           icon="check"
           header="Success!"
-          content="Asset has been created"
+          content="Assets found"
         />
         <Form.Group>
           <Form.Field
@@ -90,9 +132,8 @@ function CreateAsset() {
             name="name"
             label="Name"
             placeholder="name"
-            value={asset.name}
+            value={assets.name}
             onChange={handleChange}
-            required
           />
 
           <Form.Field
@@ -100,7 +141,7 @@ function CreateAsset() {
             name="model"
             label="Model"
             placeholder="model"
-            value={asset.model}
+            value={assets.model}
             onChange={handleChange}
           />
           <Form.Field
@@ -108,7 +149,7 @@ function CreateAsset() {
             name="type"
             label="Type"
             placeholder="type"
-            value={asset.type}
+            value={assets.type}
             onChange={handleChange}
           />
         </Form.Group>
@@ -118,9 +159,8 @@ function CreateAsset() {
             name="assetID"
             label="AssetID"
             placeholder="assetID"
-            value={asset.assetID}
+            value={assets.assetID}
             onChange={handleChange}
-            required
           />
 
           <Form.Field
@@ -128,7 +168,7 @@ function CreateAsset() {
             name="category"
             label="Category"
             placeholder="category"
-            value={asset.category}
+            value={assets.category}
             onChange={handleChange}
           />
 
@@ -137,7 +177,7 @@ function CreateAsset() {
             name="assignee"
             label="Assignee"
             placeholder="assignee"
-            value={asset.assignee}
+            value={assets.assignee}
             onChange={handleChange}
           />
         </Form.Group>
@@ -146,7 +186,7 @@ function CreateAsset() {
           name="description"
           label="Description"
           placeholder="Description"
-          value={asset.description}
+          value={assets.description}
           onChange={handleChange}
         />
 
@@ -154,12 +194,29 @@ function CreateAsset() {
           control={Button}
           disabled={disabled || loading}
           color="blue"
-          content="Submit"
+          content="Search"
           type="submit"
         />
       </Form>
+
+      <Table celled padded>
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell singleLine>AssetID</Table.HeaderCell>
+            <Table.HeaderCell singleLine>Name</Table.HeaderCell>
+            <Table.HeaderCell singleLine>Asset Health</Table.HeaderCell>
+            <Table.HeaderCell singleLine>Model</Table.HeaderCell>
+            <Table.HeaderCell singleLine>Assignee</Table.HeaderCell>
+            <Table.HeaderCell singleLine>Category</Table.HeaderCell>
+            <Table.HeaderCell singleLine>Description</Table.HeaderCell>
+            <Table.HeaderCell singleLine>Type</Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
+
+        <Table.Body>{assets.length ? assets : ""}</Table.Body>
+      </Table>
     </Container>
   );
 }
 
-export default CreateAsset;
+export default SearchAsset;
