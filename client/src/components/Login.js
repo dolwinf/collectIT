@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Button, Form, Message, Segment } from "semantic-ui-react";
+import { Button, Form, Message, Segment, Container } from "semantic-ui-react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 
@@ -82,7 +82,7 @@ function Login() {
   }
 
   return (
-    <>
+    <Container>
       <Message
         attached
         header="Welcome Back!"
@@ -130,7 +130,7 @@ function Login() {
         </Link>{" "}
         instead.
       </Message>
-    </>
+    </Container>
   );
 }
 

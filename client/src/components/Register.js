@@ -1,5 +1,12 @@
 import React, { useState, useContext } from "react";
-import { Button, Form, Icon, Message, Segment } from "semantic-ui-react";
+import {
+  Button,
+  Form,
+  Icon,
+  Message,
+  Segment,
+  Container,
+} from "semantic-ui-react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import catchErrors from "../utils/catchErrors";
@@ -50,7 +57,7 @@ function Register() {
   }
 
   return (
-    <>
+    <Container>
       <Message
         attached
         icon="settings"
@@ -121,7 +128,7 @@ function Register() {
         </Link>{" "}
         instead.
       </Message>
-    </>
+    </Container>
   );
 }
 

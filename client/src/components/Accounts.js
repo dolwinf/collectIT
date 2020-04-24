@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { Header, Checkbox, Table, Icon } from "semantic-ui-react";
+import { Header, Checkbox, Table, Icon, Container } from "semantic-ui-react";
 import cookie from "js-cookie";
 
 function Accounts() {
@@ -20,30 +20,32 @@ function Accounts() {
   }
 
   return (
-    <div style={{ margin: "2em 0" }}>
-      <Header as="h2">
-        <Icon name="settings" />
-        User Permissions
-      </Header>
-      <Table compact celled definition>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell />
-            <Table.HeaderCell>Name</Table.HeaderCell>
-            <Table.HeaderCell>Email</Table.HeaderCell>
-            <Table.HeaderCell>Joined</Table.HeaderCell>
-            <Table.HeaderCell>Updated</Table.HeaderCell>
-            <Table.HeaderCell>Role</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
+    <Container>
+      <div style={{ margin: "2em 0" }}>
+        <Header as="h2">
+          <Icon name="settings" />
+          User Permissions
+        </Header>
+        <Table compact celled definition>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell />
+              <Table.HeaderCell>Name</Table.HeaderCell>
+              <Table.HeaderCell>Email</Table.HeaderCell>
+              <Table.HeaderCell>Joined</Table.HeaderCell>
+              <Table.HeaderCell>Updated</Table.HeaderCell>
+              <Table.HeaderCell>Role</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
 
-        <Table.Body>
-          {users.map((user) => (
-            <UserPermission key={user._id} user={user} />
-          ))}
-        </Table.Body>
-      </Table>
-    </div>
+          <Table.Body>
+            {users.map((user) => (
+              <UserPermission key={user._id} user={user} />
+            ))}
+          </Table.Body>
+        </Table>
+      </div>
+    </Container>
   );
 }
 

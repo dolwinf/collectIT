@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { Table, Rating } from "semantic-ui-react";
+import { Table, Rating, Container } from "semantic-ui-react";
 import { useHistory, Link } from "react-router-dom";
 import Context from "../context";
 
@@ -69,7 +69,7 @@ function Home() {
     }
   }
   return (
-    <div>
+    <Container>
       <Table celled padded>
         <Table.Header>
           <Table.Row>
@@ -86,7 +86,7 @@ function Home() {
 
         <Table.Body>{assets}</Table.Body>
       </Table>
-    </div>
+    </Container>
   );
 }
 
