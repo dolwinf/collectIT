@@ -36,6 +36,7 @@ function Header() {
 
         { assetID }
       );
+      setAssetID("");
       console.log(returnedAsset.data.foundAsset[0]._id);
       history.push(`/asset/edit/${returnedAsset.data.foundAsset[0]._id}`);
     } catch (e) {
@@ -46,7 +47,7 @@ function Header() {
   const handleItemClick = (name) => setActiveItem({ activeItem: name });
 
   return (
-    <Menu color="blue" stackable fluid inverted size="large">
+    <Menu color="blue" stackable fluid inverted size="large" id="rubik">
       <Link to="/">
         <Menu.Item
           header
@@ -62,7 +63,7 @@ function Header() {
       </Link>
 
       {isLoggedIn && (
-        <Container text>
+        <Container text id="rubik">
           <Menu.Menu position="left">
             <Link to="/">
               <Menu.Item
@@ -97,7 +98,7 @@ function Header() {
       )}
 
       {!isLoggedIn && (
-        <Container text>
+        <Container text id="rubik">
           <Menu.Menu position="right">
             <Link to="/login">
               <Menu.Item
@@ -117,7 +118,7 @@ function Header() {
         </Container>
       )}
       {isLoggedIn && (
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} id="rubik">
           <Menu.Menu position="right">
             <Menu.Item>
               <input
