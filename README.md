@@ -26,6 +26,14 @@ CollectIT is a full stack IT Asset Management application currently in it's fina
 
 ![](CollectIT.gif)
 
+## App installation:
+- Download the repo as a zip file or clone the repo
+- From your terminal in the collectIT folder, cd server and then npm install
+- Then in the terminal type 'node server.js'
+- cd client and then npm install
+- Then in the terminal type 'npm run start'
+
+
 ## Ongoing development:
 
 - A good amount of work needs to be done on the stylingas the main focus was on app functionality at the start
