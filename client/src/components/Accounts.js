@@ -11,7 +11,7 @@ function Accounts() {
   }, []);
 
   async function getUsers() {
-    const url = `http://localhost:4000/api/users`;
+    const url = `http://ec2-3-25-89-221.ap-southeast-2.compute.amazonaws.com:4000/api/users`;
     const token = cookie.get("token");
     const payload = { headers: { Authorization: token } };
     const response = await axios.get(url, payload);
@@ -67,7 +67,7 @@ function UserPermission({ user }) {
 
   async function updatePermission() {
     const token = cookie.get("token");
-    const url = `http://localhost:4000/api/users/role`;
+    const url = `http://ec2-3-25-89-221.ap-southeast-2.compute.amazonaws.com:4000/api/users/role`;
     const payload = {
       _id: user._id,
       role: admin ? "admin" : "user",

@@ -32,7 +32,7 @@ function Header() {
 
     try {
       const returnedAsset = await axios.post(
-        "http://localhost:4000/api/asset/track",
+        "http://ec2-3-25-89-221.ap-southeast-2.compute.amazonaws.com:4000/api/asset/track",
 
         { assetID }
       );

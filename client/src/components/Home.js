@@ -12,7 +12,7 @@ function Home() {
 
   const handleRating = async (e, { rating }, id) => {
     try {
-      const ratted = await axios.put("http://localhost:4000/api/asset/rating", {
+      const ratted = await axios.put("http://ec2-3-25-89-221.ap-southeast-2.compute.amazonaws.com:4000/api/asset/rating", {
         rating,
         id,
       });
@@ -33,7 +33,7 @@ function Home() {
   }, []);
   async function getAssets() {
     try {
-      const response = await axios.get("http://localhost:4000/api/assets/");
+      const response = await axios.get("http://ec2-3-25-89-221.ap-southeast-2.compute.amazonaws.com:4000/api/assets/");
       console.log(response.data.foundAssets);
       setAssets(
         response.data.foundAssets.map((item) => (

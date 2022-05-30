@@ -42,7 +42,7 @@ function SearchAsset() {
 
   const handleRating = async (e, { rating }, id) => {
     try {
-      const ratted = await axios.put("http://localhost:4000/api/asset/rating", {
+      const ratted = await axios.put("http://ec2-3-25-89-221.ap-southeast-2.compute.amazonaws.com:4000/api/asset/rating", {
         rating,
         id,
       });
@@ -61,7 +61,7 @@ function SearchAsset() {
       setDisabled(true);
       setLoading(true);
       const assetData = await axios.post(
-        "http://localhost:4000/api/search",
+        "http://ec2-3-25-89-221.ap-southeast-2.compute.amazonaws.com:4000/api/search",
 
         assets,
         {
