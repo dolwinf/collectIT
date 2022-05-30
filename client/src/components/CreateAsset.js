@@ -12,6 +12,7 @@ import {
 import axios from "axios";
 import catchErrors from "../utils/catchErrors";
 import cookie from "js-cookie";
+import { awsurl } from '../utils/config'
 
 const INITIAL_ASSET = {
   name: "",
@@ -47,7 +48,7 @@ function CreateAsset() {
       setDisabled(true);
       setLoading(true);
       const assetData = await axios.post(
-        "http://ec2-3-25-89-221.ap-southeast-2.compute.amazonaws.com:4000/api/asset/create",
+        `${awsurl}/api/asset/create`,
 
         asset,
         {

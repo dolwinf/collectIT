@@ -12,6 +12,7 @@ import axios from "axios";
 import catchErrors from "../utils/catchErrors";
 import cookie from "js-cookie";
 import Context from "../context";
+import { awsurl } from '../utils/config'
 
 const INITIAL_USER = {
   name: "",
@@ -45,7 +46,7 @@ function Register() {
     try {
       setLoading(true);
       setError("");
-      const url = `http://ec2-3-25-89-221.ap-southeast-2.compute.amazonaws.com:4000/api/signup`;
+      const url = `${awsurl}/api/signup`;
       const payload = { ...user };
       const response = await axios.post(url, payload);
       handleLogin(response.data);

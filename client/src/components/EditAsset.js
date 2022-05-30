@@ -13,6 +13,7 @@ import {
 import axios from "axios";
 import cookie from "js-cookie";
 import catchErrors from "../utils/catchErrors";
+import { awsurl } from '../utils/config'
 
 function EditAsset(props) {
   const [asset, setAsset] = useState();
@@ -25,7 +26,7 @@ function EditAsset(props) {
   const history = useHistory();
 
   async function getUsers() {
-    const url = `http://ec2-3-25-89-221.ap-southeast-2.compute.amazonaws.com:4000/api/users`;
+    const url = `${awsurl}/api/users`;
     const token = cookie.get("token");
     const payload = { headers: { Authorization: token } };
     const response = await axios.get(url, payload);
@@ -34,7 +35,7 @@ function EditAsset(props) {
   }
 
   async function getCurrentAsset() {
-    const url = `http://ec2-3-25-89-221.ap-southeast-2.compute.amazonaws.com:4000/api/asset/${props.match.params.id}`;
+    const url = `${awsurl}/api/asset/${props.match.params.id}`;
     const response = await axios.get(url);
     setAsset(response.data.foundAsset);
   }
@@ -46,7 +47,7 @@ function EditAsset(props) {
 
   async function handleDelete(id) {
     axios
-      .delete(`http://ec2-3-25-89-221.ap-southeast-2.compute.amazonaws.com:4000/api/asset/delete/${id}`)
+      .delete(`${awsurl}/api/asset/delete/${id}`)
       .then((response) => {
         history.push("/");
       });
@@ -68,7 +69,7 @@ function EditAsset(props) {
       setDisabled(true);
       setLoading(true);
       const assetData = await axios.put(
-        `http://ec2-3-25-89-221.ap-southeast-2.compute.amazonaws.com:4000/api/asset/update/${props.match.params.id}`,
+        `${awsurl}/api/asset/update/${props.match.params.id}`,
         asset,
         {
           headers: { Authorization: `${token}` },

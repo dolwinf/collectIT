@@ -3,6 +3,7 @@ import axios from "axios";
 import { Table, Rating, Container } from "semantic-ui-react";
 import { useHistory, Link } from "react-router-dom";
 import Context from "../context";
+import { awsurl } from '../utils/config'
 
 function Home() {
   const [assets, setAssets] = useState([]);
@@ -12,7 +13,7 @@ function Home() {
 
   const handleRating = async (e, { rating }, id) => {
     try {
-      const ratted = await axios.put("http://ec2-3-25-89-221.ap-southeast-2.compute.amazonaws.com:4000/api/asset/rating", {
+      const ratted = await axios.put(`${awsurl}/api/asset/rating`, {
         rating,
         id,
       });
@@ -33,7 +34,7 @@ function Home() {
   }, []);
   async function getAssets() {
     try {
-      const response = await axios.get("http://ec2-3-25-89-221.ap-southeast-2.compute.amazonaws.com:4000/api/assets/");
+      const response = await axios.get(`${awsurl}/api/assets/`);
       console.log(response.data.foundAssets);
       setAssets(
         response.data.foundAssets.map((item) => (

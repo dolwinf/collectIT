@@ -6,6 +6,7 @@ import logo from "../images/logo.png";
 import axios from "axios";
 import cookie from "js-cookie";
 import Context from "../context";
+import { awsurl } from '../utils/config'
 
 function Header() {
   const [activeItem, setActiveItem] = useState("home");
@@ -32,7 +33,7 @@ function Header() {
 
     try {
       const returnedAsset = await axios.post(
-        "http://ec2-3-25-89-221.ap-southeast-2.compute.amazonaws.com:4000/api/asset/track",
+        `${awsurl}/api/asset/track`,
 
         { assetID }
       );

@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { Button, Form, Message, Segment, Container } from "semantic-ui-react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
-
+import { awsurl } from '../utils/config'
 import cookie from "js-cookie";
 import Context from "../context";
 
@@ -70,7 +70,7 @@ function Login() {
 
       const payload = { ...user };
       const response = await axios.post(
-        "http://ec2-3-25-89-221.ap-southeast-2.compute.amazonaws.com:4000/api/login",
+        `${awsurl}/api/login`,
         payload
       );
       handleLogin(response.data);

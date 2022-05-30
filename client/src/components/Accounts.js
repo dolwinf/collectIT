@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Header, Checkbox, Table, Icon, Container } from "semantic-ui-react";
 import cookie from "js-cookie";
+import { awsurl } from '../utils/config'
 
 function Accounts() {
   const [users, setUsers] = useState([]);
@@ -11,7 +12,7 @@ function Accounts() {
   }, []);
 
   async function getUsers() {
-    const url = `http://ec2-3-25-89-221.ap-southeast-2.compute.amazonaws.com:4000/api/users`;
+    const url = `${awsurl}/api/users`;
     const token = cookie.get("token");
     const payload = { headers: { Authorization: token } };
     const response = await axios.get(url, payload);
@@ -67,7 +68,7 @@ function UserPermission({ user }) {
 
   async function updatePermission() {
     const token = cookie.get("token");
-    const url = `http://ec2-3-25-89-221.ap-southeast-2.compute.amazonaws.com:4000/api/users/role`;
+    const url = `${awsurl}/api/users/role`;
     const payload = {
       _id: user._id,
       role: admin ? "admin" : "user",

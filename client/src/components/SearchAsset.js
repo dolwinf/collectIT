@@ -15,6 +15,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import catchErrors from "../utils/catchErrors";
 import cookie from "js-cookie";
+import { awsurl } from '../utils/config'
 
 const INITIAL_ASSET = {
   name: "",
@@ -42,7 +43,7 @@ function SearchAsset() {
 
   const handleRating = async (e, { rating }, id) => {
     try {
-      const ratted = await axios.put("http://ec2-3-25-89-221.ap-southeast-2.compute.amazonaws.com:4000/api/asset/rating", {
+      const ratted = await axios.put(`${awsurl}/api/asset/rating`, {
         rating,
         id,
       });
@@ -61,7 +62,7 @@ function SearchAsset() {
       setDisabled(true);
       setLoading(true);
       const assetData = await axios.post(
-        "http://ec2-3-25-89-221.ap-southeast-2.compute.amazonaws.com:4000/api/search",
+        `${awsurl}/api/search`,
 
         assets,
         {

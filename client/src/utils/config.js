@@ -1,0 +1,1 @@
+export const awsurl = 'http://ec2-3-25-89-221.ap-southeast-2.compute.amazonaws.com:4000'
