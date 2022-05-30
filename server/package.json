@@ -4,7 +4,7 @@
   "description": "IT asset managment software",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
   "author": "Dolwin Fernandes",
   "license": "ISC",
